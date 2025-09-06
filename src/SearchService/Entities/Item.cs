@@ -4,11 +4,11 @@ namespace SearchService.Entities
 {
     public class Item : Entity
     {
-        public int ReservePrice { get; set; }
+        public decimal ReservePrice { get; set; }
         public string Seller { get; set; }
         public string Winner { get; set; }
-        public int SoldAmount { get; set; }
-        public int CurrentHighBid { get; set; }
+        public decimal SoldAmount { get; set; }
+        public decimal CurrentHighBid { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime AuctionEnd { get; set; }
