@@ -13,6 +13,7 @@
 **/*.jfm
 **/azds.yaml
 **/bin
+**/volumes
 **/charts
 **/docker-compose*
 **/Dockerfile*
