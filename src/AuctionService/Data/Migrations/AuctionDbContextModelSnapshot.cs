@@ -34,17 +34,17 @@ namespace AuctionService.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("CurrentHighBid")
-                        .HasColumnType("integer");
+                    b.Property<decimal?>("CurrentHighBid")
+                        .HasColumnType("numeric");
 
-                    b.Property<int>("ReservePrice")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("ReservePrice")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("Seller")
                         .HasColumnType("text");
 
-                    b.Property<int?>("SoldAmount")
-                        .HasColumnType("integer");
+                    b.Property<decimal?>("SoldAmount")
+                        .HasColumnType("numeric");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");

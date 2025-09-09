@@ -6,21 +6,22 @@ namespace AuctionService.Data
 {
     public class DbInitializer
     {
-        public static void InitDb(WebApplication app)
+        public static async Task<bool> InitDb(WebApplication app)
         {
             using var scope = app.Services.CreateScope();
 
-            SeedData(scope.ServiceProvider.GetService<AuctionDbContext>());
+            return await SeedData(scope.ServiceProvider.GetService<AuctionDbContext>());
         }
 
-        private static void SeedData(AuctionDbContext context)
+        private static async Task<bool> SeedData(AuctionDbContext context)
         {
-            context.Database.Migrate();
+            await context.Database.EnsureCreatedAsync();
+            //context.Database.Migrate();
 
             if (context.Auctions.Any())
             {
                 Console.WriteLine("No need to seed");
-                return;
+                return false;
             }
 
             var auctions = new List<Auction>()
@@ -197,7 +198,7 @@ namespace AuctionService.Data
 
             context.AddRange(auctions);
 
-            context.SaveChanges();
+            return context.SaveChanges() > 0 ? true : false; ;
         }
     }
 }
