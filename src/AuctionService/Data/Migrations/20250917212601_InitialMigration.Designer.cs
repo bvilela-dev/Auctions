@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AuctionService.Data.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20250909124405_InitialMigration")]
+    [Migration("20250917212601_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -37,17 +37,17 @@ namespace AuctionService.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal?>("CurrentHighBid")
-                        .HasColumnType("numeric");
+                    b.Property<int?>("CurrentHighBid")
+                        .HasColumnType("integer");
 
-                    b.Property<decimal>("ReservePrice")
-                        .HasColumnType("numeric");
+                    b.Property<int>("ReservePrice")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Seller")
                         .HasColumnType("text");
 
-                    b.Property<decimal?>("SoldAmount")
-                        .HasColumnType("numeric");
+                    b.Property<int?>("SoldAmount")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -83,6 +83,9 @@ namespace AuctionService.Data.Migrations
 
                     b.Property<string>("Manufacturer")
                         .HasColumnType("text");
+
+                    b.Property<int>("Mileage")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Model")
                         .HasColumnType("text");

@@ -40,6 +40,11 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "--quiet", "check_running"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   auction-svc:
     image: learnings/auction-svc:latest
     build: 
@@ -57,7 +62,7 @@ services:
       postgres:
         condition: service_healthy
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
   search-svc:
     image: learnings/search-svc:latest
     build: 
@@ -73,7 +78,7 @@ services:
       - "7002:80"
     depends_on:
       rabbitmq:
-        condition: service_started
+        condition: service_healthy
       mongodb:
         condition: service_healthy
   identity-svc:

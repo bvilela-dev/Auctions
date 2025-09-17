@@ -8,26 +8,26 @@ namespace IdentityService.Pages.ServerSideSessions;
 
 public class IndexModel : PageModel
 {
-    private readonly ISessionManagementService? _sessionManagementService;
+    private readonly ISessionManagementService _sessionManagementService;
 
-    public IndexModel(ISessionManagementService? sessionManagementService = null) => _sessionManagementService = sessionManagementService;
+    public IndexModel(ISessionManagementService sessionManagementService = null) => _sessionManagementService = sessionManagementService;
 
-    public QueryResult<UserSession>? UserSessions { get; set; }
-
-    [BindProperty(SupportsGet = true)]
-    public string? DisplayNameFilter { get; set; }
+    public QueryResult<UserSession> UserSessions { get; set; }
 
     [BindProperty(SupportsGet = true)]
-    public string? SessionIdFilter { get; set; }
+    public string DisplayNameFilter { get; set; }
 
     [BindProperty(SupportsGet = true)]
-    public string? SubjectIdFilter { get; set; }
+    public string SessionIdFilter { get; set; }
 
     [BindProperty(SupportsGet = true)]
-    public string? Token { get; set; }
+    public string SubjectIdFilter { get; set; }
 
     [BindProperty(SupportsGet = true)]
-    public string? Prev { get; set; }
+    public string Token { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public string Prev { get; set; }
 
     public async Task<ActionResult> OnGet()
     {
@@ -53,7 +53,7 @@ public class IndexModel : PageModel
     }
 
     [BindProperty]
-    public string? SessionId { get; set; }
+    public string SessionId { get; set; }
 
     public async Task<IActionResult> OnPost()
     {

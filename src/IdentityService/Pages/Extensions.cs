@@ -26,7 +26,7 @@ public static class Extensions
     /// <summary>
     /// Renders a loading page that is used to redirect back to the redirectUri.
     /// </summary>
-    internal static IActionResult LoadingPage(this PageModel page, string? redirectUri)
+    internal static IActionResult LoadingPage(this PageModel page, string redirectUri)
     {
         page.HttpContext.Response.StatusCode = 200;
         page.HttpContext.Response.Headers.Location = "";
@@ -39,7 +39,7 @@ public static class Extensions
     /// </summary>
     internal static bool IsRemote(this ConnectionInfo connection)
     {
-        var localAddresses = new List<string?> { "127.0.0.1", "::1" };
+        var localAddresses = new List<string> { "127.0.0.1", "::1" };
         if (connection.LocalIpAddress != null)
         {
             localAddresses.Add(connection.LocalIpAddress.ToString());

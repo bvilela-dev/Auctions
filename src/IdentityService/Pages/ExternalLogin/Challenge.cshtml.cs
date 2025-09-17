@@ -14,7 +14,7 @@ public class Challenge : PageModel
 
     public Challenge(IIdentityServerInteractionService interactionService) => _interactionService = interactionService;
 
-    public IActionResult OnGet(string scheme, string? returnUrl)
+    public IActionResult OnGet(string scheme, string returnUrl)
     {
         if (string.IsNullOrEmpty(returnUrl))
         {

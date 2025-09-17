@@ -7,16 +7,16 @@ namespace AuctionService
     public class Item
     {
         public Guid Id { get; set; }
-        public string Manufacturer { get; set; }
-        public string Model { get; set; }
+        public required string Manufacturer { get; set; }
+        public required string Model { get; set; }
         public string Description { get; set; }
         public int Year { get; set; }
-        public string Color { get; set; }
-        public string ImageUrl { get; set; }
+        public required string Color { get; set; }
+        public int Mileage { get; set; }
+        public required string ImageUrl { get; set; }
 
-        // nav properties
-
-        public Auction Auction { get; set; }
+        // navigation properties
+        public Auction? Auction { get; set; } = null!;
         public Guid AuctionId { get; set; }
     }
 }

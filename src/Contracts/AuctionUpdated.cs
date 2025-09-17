@@ -8,11 +8,11 @@ namespace Contracts
 {
     public class AuctionUpdated
     {
-        public string Id { get; set; }
-        public string Manufacturer { get; set; }
-        public string Model { get; set; }
+        public required string Id { get; set; }
+        public required string Manufacturer { get; set; }
+        public required string Model { get; set; }
         public string Description { get; set; }
         public int Year { get; set; }
-        public string Color { get; set; }
+        public required string Color { get; set; }
     }
 }
