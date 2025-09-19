@@ -14,7 +14,7 @@ export type Auction = {
     updatedAt: string
     auctionEnd: string
     status: string
-    manufacturer: string
+    make: string
     model: string
     year: number
     color: string

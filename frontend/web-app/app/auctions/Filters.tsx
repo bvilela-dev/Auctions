@@ -6,7 +6,7 @@ import { GiFinishLine, GiFlame } from "react-icons/gi";
 
 const pageSizeButtons = [4, 8, 12];
 const orderButtons = [
-    { label: 'Alphabetical', icon: AiOutlineSortAscending, value: 'manufacturer' },
+    { label: 'Alphabetical', icon: AiOutlineSortAscending, value: 'make' },
     { label: 'End date', icon: AiOutlineClockCircle, value: 'endingSoon' },
     { label: 'Recently added', icon: BsFillStopCircleFill, value: 'new' },
 ]
