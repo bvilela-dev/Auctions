@@ -1,6 +1,8 @@
 ﻿using AuctionService.Data;
+using AuctionService.Entities;
 using Contracts;
 using MassTransit;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuctionService.Consumers
 {
@@ -15,7 +17,8 @@ namespace AuctionService.Consumers
         public async Task Consume(ConsumeContext<AuctionFinished> context)
         {
             Console.WriteLine("--> Consuming Auction finished");
-            var auction = await _dbContext.Auctions.FindAsync(context.Message.AuctionId);
+            var auction = await _dbContext.Auctions.FindAsync(Guid.Parse(context.Message.AuctionId))
+                        ?? throw new InvalidOperationException($"Auction with ID {context.Message.AuctionId} not found.");
 
             if (context.Message.ItemSold)
             {

@@ -5,26 +5,26 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 USER $APP_UID
 WORKDIR /app
 EXPOSE 80
-EXPOSE 7777
+
 
 # Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/AuctionService/AuctionService.csproj", "src/AuctionService/"]
+COPY ["src/BiddingService/BiddingService.csproj", "src/BiddingService/"]
 COPY ["src/Contracts/Contracts.csproj", "src/Contracts/"]
-RUN dotnet restore "./src/AuctionService/AuctionService.csproj"
+RUN dotnet restore "./src/BiddingService/BiddingService.csproj"
 COPY . .
-WORKDIR "/src/src/AuctionService"
-RUN dotnet build "./AuctionService.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/src/BiddingService"
+RUN dotnet build "./BiddingService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./AuctionService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./BiddingService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Esta fase é usada na produção ou quando executada no VS no modo normal (padrão quando não está usando a configuração de Depuração)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AuctionService.dll"]
+ENTRYPOINT ["dotnet", "BiddingService.dll"]
