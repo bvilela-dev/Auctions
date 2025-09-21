@@ -5,7 +5,7 @@ export type PagedResult<T> = {
 }
 
 export type Auction = {
-    reservePrice?: number
+    reservePrice: number
     seller: string
     winner?: string
     soldAmount?: number
@@ -14,11 +14,10 @@ export type Auction = {
     updatedAt: string
     auctionEnd: string
     status: string
-    make: string
+    manufacturer: string
     model: string
     year: number
     color: string
-    mileage: number
     imageUrl: string
     id: string
   }

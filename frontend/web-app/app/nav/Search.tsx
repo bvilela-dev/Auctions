@@ -32,7 +32,7 @@ export default function Search() {
                 onChange={handleChange}
                 value={value}
                 type="text"
-                placeholder="Search for itens by make, model or color"
+                placeholder="Search for itens by manufacturer, model or color"
                 className="
                 flex-grow
                 pl-5
