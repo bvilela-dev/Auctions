@@ -24,8 +24,8 @@ export default function AuctionForm({ auction }: Props) {
 
     useEffect(() => {
         if (auction) {
-            const { manufacturer, model, color, year } = auction;
-            reset({ manufacturer, model, color, year })
+            const { manufacturer, model, color, mileage, year } = auction;
+            reset({ manufacturer, model, color, mileage, year })
         }
         setFocus('manufacturer')
     }, [setFocus, auction, reset])
@@ -64,6 +64,8 @@ export default function AuctionForm({ auction }: Props) {
             <div className="grid grid-cols-2 gap-3">
                 <Input name="year" label="Year" type='number' control={control}
                     rules={{ required: 'Year is required' }} />
+                <Input name="mileage" label="Mileage" control={control}
+                    rules={{ required: 'Mileage is required' }} />
             </div>
 
             {pathname === '/auctions/create' &&
