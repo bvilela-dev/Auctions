@@ -20,7 +20,7 @@ export default function DetailedSpecs({auction}: Props) {
                 </TableRow>
                 <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                        manufacturer
+                        Manufacturer
                     </TableCell>
                     <TableCell>
                         {auction.manufacturer}
@@ -40,14 +40,6 @@ export default function DetailedSpecs({auction}: Props) {
                     </TableCell>
                     <TableCell>
                         {auction.year}
-                    </TableCell>
-                </TableRow>
-                <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                        Mileage
-                    </TableCell>
-                    <TableCell>
-                        {auction.mileage}
                     </TableCell>
                 </TableRow>
                 <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">

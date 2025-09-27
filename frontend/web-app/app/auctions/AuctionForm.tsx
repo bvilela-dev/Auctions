@@ -24,10 +24,10 @@ export default function AuctionForm({ auction }: Props) {
 
     useEffect(() => {
         if (auction) {
-            const { manufacturer, model, color, mileage, year } = auction;
-            reset({ manufacturer, model, color, mileage, year })
+            const { manufacturer, model, color,  year } = auction;
+            reset({ manufacturer, model, color,  year })
         }
-        setFocus('manufacturer')
+        setFocus('Manufacturer')
     }, [setFocus, auction, reset])
 
     async function onSubmit(data: FieldValues) {
@@ -54,8 +54,8 @@ export default function AuctionForm({ auction }: Props) {
 
     return (
         <form className="flex flex-col mt-3" onSubmit={handleSubmit(onSubmit)}>
-            <Input name="manufacturer" label="manufacturer" control={control}
-                rules={{ required: 'manufacturer is required' }} />
+            <Input name="Manufacturer" label="Manufacturer" control={control}
+                rules={{ required: 'Manufacturer is required' }} />
             <Input name="model" label="Model" control={control}
                 rules={{ required: 'Model is required' }} />
             <Input name="color" label="Color" control={control}
@@ -64,8 +64,7 @@ export default function AuctionForm({ auction }: Props) {
             <div className="grid grid-cols-2 gap-3">
                 <Input name="year" label="Year" type='number' control={control}
                     rules={{ required: 'Year is required' }} />
-                <Input name="mileage" label="Mileage" control={control}
-                    rules={{ required: 'Mileage is required' }} />
+    
             </div>
 
             {pathname === '/auctions/create' &&

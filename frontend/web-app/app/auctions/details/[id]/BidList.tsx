@@ -59,7 +59,7 @@ export default function BidList({ user, auction }: Props) {
                 {bids.length === 0 ? (
                     <EmptyFilter
                         title='No bids for this item'
-                        subtitle="Please feel free to manufacturer a bid" />
+                        subtitle="Please feel free to make a bid" />
                 ) : (
                     <>
                         {bids.map(bid => (
