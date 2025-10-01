@@ -14,8 +14,12 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    builder.Host.UseSerilog((ctx, lc) => lc
+        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", formatProvider: CultureInfo.InvariantCulture)
+        .Enrich.FromLogContext()
+        .ReadFrom.Configuration(ctx.Configuration));
+
     var app = builder
-        .ConfigureLogging()
         .ConfigureServices()
         .ConfigurePipeline();
 
@@ -29,6 +33,7 @@ try
         {
             var usage = app.Services.GetRequiredService<LicenseUsageSummary>();
             Console.Write(Summary(usage));
+            Console.ReadKey();
         });
     }
 

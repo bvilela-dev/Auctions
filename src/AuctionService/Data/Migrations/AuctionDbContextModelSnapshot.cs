@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AuctionService.Data.Migrations
+namespace AuctionService.Data.MIgrations
 {
     [DbContext(typeof(AuctionDbContext))]
     partial class AuctionDbContextModelSnapshot : ModelSnapshot
@@ -80,9 +80,6 @@ namespace AuctionService.Data.Migrations
 
                     b.Property<string>("Manufacturer")
                         .HasColumnType("text");
-
-                    b.Property<int>("Mileage")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Model")
                         .HasColumnType("text");

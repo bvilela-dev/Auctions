@@ -40,11 +40,6 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-    healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "--quiet", "check_running"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
   auction-svc:
     image: learnings/auction-svc:latest
     build: 
@@ -53,21 +48,22 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=http://+:7777
       - RabbitMQ__Host=rabbitmq
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Username=postgres;Password=postgrespw;Database=auctions
       - IdentityServiceUrl=http://identity-svc
       - Kestrel__Endpoints__Grpc__Protocols=Http2
       - Kestrel__Endpoints__Grpc__Url=http://+:7777
       - Kestrel__Endpoints__WebApi__Protocols=Http1
-      - Kestrel__Endpoints__WebApi__Url=http://+:80
+      - Kestrel__Endpoints__WebApi__Url=http://+80
     ports:
-      - "7001:80"
-      - "7777:7777"
+      - 7001:80
+      - 7777:7777
     depends_on:
       postgres:
         condition: service_healthy
       rabbitmq:
-        condition: service_healthy
+        condition: service_started
   search-svc:
     image: learnings/search-svc:latest
     build: 
@@ -80,10 +76,10 @@ services:
       - ConnectionStrings__MongoDbConnection=mongodb://root:mongopw@mongodb
       - AuctionServiceUrl=http://auction-svc
     ports:
-      - "7002:80"
+      - 7002:80
     depends_on:
       rabbitmq:
-        condition: service_healthy
+        condition: service_started
       mongodb:
         condition: service_healthy
   identity-svc:
@@ -94,12 +90,16 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
+      - IssuerUri=https://id.auctions.local
+      - ClientApp=https://app.auctions.local
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Username=postgres;Password=postgrespw;Database=identity
+      - VIRTUAL_HOST=id.auctions.local
     ports:
       - "5001:80"
     volumes:
       - ./volumes/dp-keys:/app/dp-keys
       - ./volumes/idsrv-keys:/app/keys
+
     depends_on:
       postgres:
         condition: service_healthy
@@ -111,10 +111,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
-    ports:
-      - "6001:80"
+      - ClientApp=https://app.auctions.local
+      - VIRTUAL_HOST=api.auctions.local
   bid-svc:
-    image: trycatchlearn/bid-svc:latest
+    image: learnings/bid-svc:latest
     build: 
       context: .
       dockerfile: src/BiddingService/Dockerfile
@@ -126,7 +126,7 @@ services:
       - IdentityServiceUrl=http://identity-svc
       - GrpcAuction=http://auction-svc:7777
     ports:
-      - "7003:80"
+      - 7003:80
     depends_on:
       rabbitmq:
         condition: service_started
@@ -140,12 +140,37 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
-      - RabbitMQ__Host=rabbitmq
+      - RabbitMq__Host=rabbitmq
     ports:
-      - "7004:80"
+      - 7004:80
     depends_on:
-      rabbitmq:
-        condition: service_started  
+      - rabbitmq
+  web-app:
+    image: learnings/web-app:latest
+    build: 
+      context: .
+      dockerfile: frontend/web-app/Dockerfile
+    volumes:
+      - /var/lib/web/data
+    environment:
+      - AUTH_SECRET="1RSs9IomZ6yc8wUdKOAJfDpDs68fhD1TfWla/ro+wdw="
+      - API_URL=http://gateway-svc/
+      - ID_URL=https://id.auctions.local
+      - ID_URL_INTERNAL=http://identity-svc
+      - AUTH_URL=https://app.auctions.local
+      - AUTH_URL_INTERNAL=http://web-app:3000
+      - NEXT_PUBLIC_NOTIFY_URL=https://api.auctions.local/notifications
+      - VIRTUAL_HOST=app.auctions.local
+      - VIRTUAL_PORT=3000
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./devcerts:/etc/nginx/certs
 volumes:
-  pgdata:
+  pgdata: 
   mongodata:

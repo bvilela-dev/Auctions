@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AuctionService.Data.Migrations
+namespace AuctionService.Data.MIgrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration
@@ -81,7 +81,6 @@ namespace AuctionService.Data.Migrations
                     Description = table.Column<string>(type: "text", nullable: true),
                     Year = table.Column<int>(type: "integer", nullable: false),
                     Color = table.Column<string>(type: "text", nullable: true),
-                    Mileage = table.Column<int>(type: "integer", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
                     AuctionId = table.Column<Guid>(type: "uuid", nullable: false)
                 },

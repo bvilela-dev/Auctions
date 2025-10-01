@@ -9,10 +9,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace AuctionService.Data.Migrations
+namespace AuctionService.Data.MIgrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20250917212601_InitialMigration")]
+    [Migration("20251001223206_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -83,9 +83,6 @@ namespace AuctionService.Data.Migrations
 
                     b.Property<string>("Manufacturer")
                         .HasColumnType("text");
-
-                    b.Property<int>("Mileage")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Model")
                         .HasColumnType("text");
